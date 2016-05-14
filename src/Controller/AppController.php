@@ -58,7 +58,79 @@ class AppController extends Controller
 			
 		]);
     }
+	
 
+	/**
+    * Before filter logic
+    *
+    */
+	public function beforeFilter(Event $event)
+	{
+		$this->user_id = $this->Auth->user('id');
+
+		// validate user token for logged user
+		if($this->user_id) {
+			if(!$this->checkUserToken()) { 
+				$this->Auth->logout(); // logout user
+				throw new ForbiddenException("Invalid Token!");    // throw an 403 error
+			}
+		}        
+	}
+
+	/**
+     * Check User Token
+     */
+	public function checkUserToken() 
+	{
+		$request_token = $this->getRequestToken();
+
+		if (!$request_token) {
+			return false;
+		}
+
+		if ($request_token != $this->userToken()) {               
+			return false;
+		}
+		return true;
+	}
+
+	/**
+     * Get Request token
+     */
+	public function getRequestToken() 
+	{
+
+		$headers = $this->getHeaders();
+		if (!isset($headers['Authorization'])) return false;
+		$token = explode(" ", $headers['Authorization']);       
+		return $token[1];
+	}
+
+	/**
+     * Get Request headers
+     */
+	private function getHeaders() 
+	{
+		$headers = getallheaders();        
+		return $headers;
+	}
+
+	/**
+    * Get User token
+    *
+    */
+	public function userToken()
+	{
+		return $this->Auth->user('token');
+	}
+
+	/**
+    * Authorization default true
+    */
+	public function isAuthorized($user)
+	{
+		return false;
+	}
     /**
      * Before render callback.
      *

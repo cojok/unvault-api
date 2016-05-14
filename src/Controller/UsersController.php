@@ -2,10 +2,13 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
-use Cake\Event\Event;
-use Cake\View\Exception\MissingTemplateException;
-use Cake\Network\Exception\ForbiddenException;
+use Cake\Core\Configure;
+use Cake\Network\Exception\InternalErrorException;
 use Cake\Network\Exception\UnauthorizedException;
+use Cake\Event\Event;
+use Cake\Utility\Text;
+use Cake\Utility\Security;
+
 
 /**
  * Users Controller
@@ -43,6 +46,11 @@ class UsersController extends AppController
 					"type" => "success",
 					"body" => "Logged In successfully"
 				];
+
+				$token =  Security::hash($user['id'].$user['email'], 'sha1', true);
+				$this->request->session()->write('Auth.User.token', $token);
+				$this->response->header('Authorization', 'Bearer ' . $token);
+				print_r($this->request->session()->read());
 //				$user = $this->User->find('login', ['email'=>$username, 'password'=>$password]);
 //				return $this->redirect($this->Auth->redirectUrl());
 			} else {
