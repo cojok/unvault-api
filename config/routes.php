@@ -66,6 +66,11 @@ Router::scope('/', function (RouteBuilder $routes) {
 	//add a card
 	$routes->connect('/add-card', ['controller' => 'Cards', 'action' => 'add']);
 	
+	//edit a card
+	$routes->connect('/:id/update-card', ['controller' => 'Cards', 'action' => 'edit']);
+	
+	//delete card
+	$routes->connect('/:id/delete-card', ['controller' => 'Cards', 'action' => 'delete']);
 	//logged in user data
 	$routes->connect('/user', ['controller' => 'Users', 'action' => 'index']);
 	

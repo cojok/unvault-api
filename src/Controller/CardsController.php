@@ -71,6 +71,7 @@ class CardsController extends AppController
      */
     public function edit($id = null)
     {
+		$id = $this->request->params['id'];
         $card = $this->Cards->get($id, [
             'contain' => []
         ]);
@@ -97,6 +98,7 @@ class CardsController extends AppController
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
+		$id = $this->request->params['id'];
         $card = $this->Cards->get($id);
         if ($this->Cards->delete($card)) {
             $this->Flash->success(__('The card has been deleted.'));
