@@ -34,15 +34,28 @@ class UsersController extends AppController
 	
 	public function login()
 	{
+		$message = [];
 		if ($this->request->is('post')) {
 			$user = $this->Auth->identify();
 			if ($user) {
 				$this->Auth->setUser($user);
-					
+				$message = [
+					"type" => "success",
+					"body" => "Logged In successfully"
+				];
 //				$user = $this->User->find('login', ['email'=>$username, 'password'=>$password]);
 //				return $this->redirect($this->Auth->redirectUrl());
+			} else {
+				$message = [
+					"type" => "error",
+					"body" => "Wrong username or password"
+				];
 			}
-			$this->Flash->error(__('Invalid username or password, try again'));
+			
+			$message = json_encode($message);
+			
+			$this->set(compact('message'));
+			$this->set('_serialize', ['message']);
 		}
 	}
 	

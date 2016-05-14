@@ -44,6 +44,7 @@ class AppController extends Controller
     {
         parent::initialize();
 		
+		$this->template = 'ajax';
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
 		
@@ -54,6 +55,7 @@ class AppController extends Controller
 					'fields' => ['username' => 'email', 'password'=>'password']
 				]
 			]
+			
 		]);
     }
 
