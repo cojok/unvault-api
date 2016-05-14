@@ -63,6 +63,9 @@ Router::scope('/', function (RouteBuilder $routes) {
 	// Home route
 	$routes->connect('/home', ['controller' => 'Users', 'action' => 'view']);
 	
+	//add a card
+	$routes->connect('/add-card', ['controller' => 'Cards', 'action' => 'add']);
+	
 //	$routes->connect('/login', ['controller' => 'Users', 'action' => 'login', "_ext" => "json"]);
 	
     /**
