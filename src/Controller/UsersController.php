@@ -18,53 +18,52 @@ use Cake\Utility\Security;
 class UsersController extends AppController
 {
 
-	public function beforeFilter(Event $event)
-	{
-		parent::beforeFilter($event);
-		// Allow users to register and logout.
-		// You should not add the "login" action to allow list. Doing so would
-		// cause problems with normal functioning of AuthComponent.
-		$this->Auth->config('message', "Woopsie, you are not authorized to access this area.");
-		
-		$this->Auth->allow(['logout', 'add']);
-	}
+//	public function beforeFilter(Event $event)
+//	{
+//		parent::beforeFilter($event);
+//		// Allow users to register and logout.
+//		// You should not add the "login" action to allow list. Doing so would
+//		// cause problems with normal functioning of AuthComponent.
+//		$this->Auth->config('message', "Woopsie, you are not authorized to access this area.");
+//		
+//		$this->Auth->allow(['logout', 'add']);
+//	}
 	
-	/**
-     * Login method
-     *
-     * @return \Cake\Network\Response|null
-     */
-	
-	public function login()
-	{
-		$message = [];
-		if ($this->request->is('post')) {
-			$user = $this->Auth->identify();
-			if ($user) {
-				$this->Auth->setUser($user);
-				
-				$token =  Security::hash($user['id'].$user['email'], 'sha1', true);
-				$this->request->session()->write('Auth.User.token', $token);
-				$this->response->header('Authorization', 'Bearer ' . $token);
-				$message = [
-					"type" => "success",
-					"body" => "Logged In successfully",
-					"token" => 'Bearer ' . $token
-				];
-
-			} else {
-				$message = [
-					"type" => "error",
-					"body" => "Wrong username or password"
-				];
-			}
-			
-			//$message = json_encode($message);
-			
-			$this->set(compact('message'));
-			$this->set('_serialize', ['message']);
-		}
-	}
+//	/**
+//     * Login method
+//     *
+//     * @return \Cake\Network\Response|null
+//     */
+//	
+//	public function login()
+//	{
+//		$message = [];
+//		if ($this->request->is('post')) {
+//			$user = $this->Auth->identify();
+//			if ($user) {
+//				$this->Auth->setUser($user);
+//				
+//				$token =  Security::hash($user['id'].$user['email'], 'sha1', true);
+//				$this->request->session()->write('Auth.User.token', $token);
+//				$this->response->header('Authorization', 'Bearer ' . $token);
+//				$message = [
+//					"type" => "success",
+//					"body" => "Logged In successfully",
+//					"token" => 'Bearer ' . $token
+//				];
+//
+//			} else {
+//				$message = [
+//					"type" => "error",
+//					"body" => "Wrong username or password"
+//				];
+//			}
+//			
+//			
+//			$this->set(compact('message'));
+//			$this->set('_serialize', ['message']);
+//		}
+//	}
 	
 	/**
      * Logout method
@@ -76,15 +75,7 @@ class UsersController extends AppController
 		return $this->redirect($this->Auth->logout());
 	}
 	
-	/**
-     *  Return Unauthorized 401
-     * 
-     */
-	public function unauthorized()
-	{       
-		throw new UnauthorizedException("You are not logged in");       
-	}
-
+	
     /**
      * Index method
      *
@@ -107,9 +98,11 @@ class UsersController extends AppController
      */
     public function view($id = null)
     {
-		$id = $this->request->params['id'];
+		$id = 1;
         $user = $this->Users->get($id, [
-            'contain' => []
+            'contain' => [
+				'Cards'
+			]
         ]);
 
         $this->set('user', $user);
@@ -128,7 +121,8 @@ class UsersController extends AppController
             $user = $this->Users->patchEntity($user, $this->request->data);
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('The user has been saved.'));
-                return $this->redirect(['action' => 'index']);
+				
+//                return $this->redirect(['action' => 'index']);
             } else {
                 $this->Flash->error(__('The user could not be saved. Please, try again.'));
             }
