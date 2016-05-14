@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.42)
 # Database: unvault
-# Generation Time: 2016-05-14 11:50:17 +0000
+# Generation Time: 2016-05-14 14:43:01 +0000
 # ************************************************************
 
 
@@ -32,6 +32,87 @@ CREATE TABLE `cards` (
   `answer` longtext,
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOCK TABLES `cards` WRITE;
+/*!40000 ALTER TABLE `cards` DISABLE KEYS */;
+
+INSERT INTO `cards` (`id`, `name`, `question`, `answer`, `created`, `modified`)
+VALUES
+	(1,'Angualrjs','What is angularjs?\n	','The best framework',NULL,NULL);
+
+/*!40000 ALTER TABLE `cards` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+# Dump of table cards_tags
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `cards_tags`;
+
+CREATE TABLE `cards_tags` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `card_id` int(11) DEFAULT NULL,
+  `tag_id` int(11) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+# Dump of table tags
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `tags`;
+
+CREATE TABLE `tags` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+# Dump of table users
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `users`;
+
+CREATE TABLE `users` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `email` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `full_name` varchar(255) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+
+INSERT INTO `users` (`id`, `email`, `password`, `full_name`, `created`, `modified`)
+VALUES
+	(1,'cojokka@gmail.com','password','flavius cojocariu',NULL,NULL);
+
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+# Dump of table users_cards
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `users_cards`;
+
+CREATE TABLE `users_cards` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `card_id` int(11) DEFAULT NULL,
+  `status` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
