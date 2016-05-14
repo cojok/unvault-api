@@ -36,6 +36,7 @@ class UsersTable extends Table
             'targetForeignKey' => 'card_id',
             'joinTable' => 'users_cards'
         ]);
+		
     }
 
     /**
