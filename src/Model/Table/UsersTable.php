@@ -43,7 +43,8 @@ class UsersTable extends Table
      *
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
-     */
+	 */
+	
     public function validationDefault(Validator $validator)
     {
         $validator
@@ -52,10 +53,10 @@ class UsersTable extends Table
 
         $validator
             ->email('email')
-            ->allowEmpty('email');
+			->notEmpty('email');
 
         $validator
-            ->allowEmpty('password');
+			->notEmpty('password');
 
         $validator
             ->allowEmpty('full_name');

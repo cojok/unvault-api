@@ -16,6 +16,9 @@ namespace App\Controller;
 
 use Cake\Controller\Controller;
 use Cake\Event\Event;
+use Cake\View\Exception\MissingTemplateException;
+use Cake\Network\Exception\ForbiddenException;
+use Cake\Network\Exception\UnauthorizedException;
 
 /**
  * Application Controller
@@ -40,7 +43,31 @@ class AppController extends Controller
     public function initialize()
     {
         parent::initialize();
-
+		
+//		$this->loadComponent('Auth',[
+//			'authenticate' => [
+//				'Form' => [
+//					'fields' => ['username' => 'email', 'password'=>'password']
+//				]
+//			],
+//			'unauthorizedRedirect' => false
+//		]);
+		
+		$this->loadComponent('Auth', [
+			'authenticate' => [
+				'Form' => [
+					'fields' => ['username' => 'email', 'password'=>'password']
+				]
+			],
+			'loginAction'=>[
+				'controller'=>'Users', 
+				'action'=>'unauthorized',     
+				'_ext'=>'json'],
+			'authorize'=>['Users'],
+			'authError'=>"Error"
+		]);
+		
+		
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
     }
@@ -59,4 +86,5 @@ class AppController extends Controller
             $this->set('_serialize', true);
         }
     }
+	
 }

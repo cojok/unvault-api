@@ -2,6 +2,10 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Event\Event;
+use Cake\View\Exception\MissingTemplateException;
+use Cake\Network\Exception\ForbiddenException;
+use Cake\Network\Exception\UnauthorizedException;
 
 /**
  * Users Controller
@@ -10,6 +14,55 @@ use App\Controller\AppController;
  */
 class UsersController extends AppController
 {
+	
+	public function beforeFilter(Event $event)
+	{
+		parent::beforeFilter($event);
+		// Allow users to register and logout.
+		// You should not add the "login" action to allow list. Doing so would
+		// cause problems with normal functioning of AuthComponent.
+		$this->Auth->config('authError', "Woopsie, you are not authorized to access this area.");
+		
+		$this->Auth->allow(['logout', 'login']);
+	}
+	
+	/**
+     * Login method
+     *
+     * @return \Cake\Network\Response|null
+     */
+	
+	public function login()
+	{
+		if ($this->request->is('post')) {
+			$user = $this->Auth->identify();
+			if ($user) {
+				$this->Auth->setUser($user);
+				print_r($this->request);
+				return $this->redirect($this->Auth->redirectUrl());
+			}
+			$this->Flash->error(__('Invalid username or password, try again'));
+		}
+	}
+	
+	/**
+     * Logout method
+     *
+     * @return \Cake\Network\Response|null
+     */
+	public function logout()
+	{
+		return $this->redirect($this->Auth->logout());
+	}
+	
+	/**
+     *  Return Unauthorized 401
+     * 
+     */
+	public function unauthorized()
+	{       
+		throw new UnauthorizedException("You are not logged in");       
+	}
 
     /**
      * Index method
