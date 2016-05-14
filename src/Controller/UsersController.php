@@ -103,7 +103,7 @@ class UsersController extends AppController
             'contain' => []
         ]);
 		
-		$cards = $this->Users->Cards->find('list',['limit' => 200])
+		$cards = $this->Users->Cards->find('all',['limit' => 200]);
 
         $this->set(compact('user', 'cards'));
         $this->set('_serialize', ['user', 'cards']);
