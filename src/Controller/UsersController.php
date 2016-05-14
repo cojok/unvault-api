@@ -58,7 +58,7 @@ class UsersController extends AppController
 				];
 			}
 			
-			$message = json_encode($message);
+			//$message = json_encode($message);
 			
 			$this->set(compact('message'));
 			$this->set('_serialize', ['message']);
