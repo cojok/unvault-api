@@ -42,14 +42,15 @@ class UsersController extends AppController
 			$user = $this->Auth->identify();
 			if ($user) {
 				$this->Auth->setUser($user);
-				$message = [
-					"type" => "success",
-					"body" => "Logged In successfully"
-				];
-
+				
 				$token =  Security::hash($user['id'].$user['email'], 'sha1', true);
 				$this->request->session()->write('Auth.User.token', $token);
 				$this->response->header('Authorization', 'Bearer ' . $token);
+				$message = [
+					"type" => "success",
+					"body" => "Logged In successfully",
+					"token" => 'Bearer ' . $token
+				];
 
 			} else {
 				$message = [
