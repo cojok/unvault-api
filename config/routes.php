@@ -43,6 +43,10 @@ use Cake\Routing\Router;
 Router::defaultRouteClass('DashedRoute');
 
 Router::scope('/', function (RouteBuilder $routes) {
+	
+	// roter extions for getting only json output
+	$routes->extensions(['json']);
+	
     /**
      * Here, we are connecting '/' (base path) to a controller called 'Pages',
      * its action called 'display', and we pass a param to select the view file
@@ -54,7 +58,10 @@ Router::scope('/', function (RouteBuilder $routes) {
      * ...and connect the rest of 'Pages' controller's URLs.
      */
     $routes->connect('/pages/*', ['controller' => 'Pages', 'action' => 'display']);
-
+	
+	
+	// Home route
+	$routes->connect('/home', ['controller' => 'Users', 'action' => 'index']);
     /**
      * Connect catchall routes for all controllers.
      *
@@ -73,6 +80,7 @@ Router::scope('/', function (RouteBuilder $routes) {
      */
     $routes->fallbacks('DashedRoute');
 });
+
 
 /**
  * Load all plugin routes.  See the Plugin documentation on
