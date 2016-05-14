@@ -53,19 +53,19 @@ class AppController extends Controller
 //			'unauthorizedRedirect' => false
 //		]);
 		
-		$this->loadComponent('Auth', [
-			'authenticate' => [
-				'Form' => [
-					'fields' => ['username' => 'email', 'password'=>'password']
-				]
-			],
-			'loginAction'=>[
-				'controller'=>'Users', 
-				'action'=>'unauthorized',     
-				'_ext'=>'json'],
-			'authorize'=>['Users'],
-			'authError'=>"Error"
-		]);
+//		$this->loadComponent('Auth', [
+//			'authenticate' => [
+//				'Form' => [
+//					'fields' => ['username' => 'email', 'password'=>'password']
+//				]
+//			],
+//			'loginAction'=>[
+//				'controller'=>'Users', 
+//				'action'=>'unauthorized',     
+//				'_ext'=>'json'],
+//			'authorize'=>['Users'],
+//			'authError'=>"Error"
+//		]);
 		
 		
         $this->loadComponent('RequestHandler');

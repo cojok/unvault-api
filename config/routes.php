@@ -61,10 +61,10 @@ Router::scope('/', function (RouteBuilder $routes) {
 	
 	
 	// Home route
-	$routes->connect('/home', ['controller' => 'Users', 'action' => 'index']);
+	$routes->connect('/:id/home', ['controller' => 'Users', 'action' => 'view']);
 	
 	//login route
-	$routes->connect('/login',['controller' => 'Users', 'action' => 'login', '_ext' => 'json']);
+//	$routes->connect('/login',['controller' => 'Users', 'action' => 'login', '_ext' => 'json']);
     /**
      * Connect catchall routes for all controllers.
      *
