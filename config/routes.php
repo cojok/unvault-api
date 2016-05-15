@@ -81,10 +81,11 @@ Router::scope('/', function (RouteBuilder $routes) {
 	//user cards
 	$routes->connect('/:id/card', ['controller' => 'Cards', 'action' => 'view']);
 	
-	//
-	
 	//logged in user data
 	$routes->connect('/user', ['controller' => 'Users', 'action' => 'index']);
+	
+	$routes->connect(  '/forbiden', ['controller' => 'Pages', 'action'=>'forbiden']); 
+	$routes->connect(  '/unauthorized', ['controller' => 'Pages', 'action'=>'unauthorized']);
 	
 //	$routes->connect('/login', ['controller' => 'Users', 'action' => 'login', "_ext" => "json"]);
 	
@@ -106,6 +107,13 @@ Router::scope('/', function (RouteBuilder $routes) {
      */
     $routes->fallbacks('DashedRoute');
 });
+
+// LOGIN Routes
+Router::scope('/login',  ['controller' => 'Login'], function($routes) {    
+	$routes->connect(  '/', ['action'=>'index',  '_ext'=>'json','[method]'=>'POST']); 
+	$routes->connect(  '/', ['action'=>'logout', '_ext'=>'json','[method]'=>'DELETE']);         
+});  
+
 
 
 /**

@@ -18,16 +18,16 @@ use Cake\Utility\Security;
 class UsersController extends AppController
 {
 
-//	public function beforeFilter(Event $event)
-//	{
-//		parent::beforeFilter($event);
-//		// Allow users to register and logout.
-//		// You should not add the "login" action to allow list. Doing so would
-//		// cause problems with normal functioning of AuthComponent.
+	public function beforeFilter(Event $event)
+	{
+		parent::beforeFilter($event);
+		// Allow users to register and logout.
+		// You should not add the "login" action to allow list. Doing so would
+		// cause problems with normal functioning of AuthComponent.
 //		$this->Auth->config('message', "Woopsie, you are not authorized to access this area.");
-//		
-//		$this->Auth->allow(['logout', 'add']);
-//	}
+		
+		$this->Auth->allow(['add']);
+	}
 	
 //	/**
 //     * Login method
@@ -121,15 +121,20 @@ class UsersController extends AppController
      */
     public function add()
     {
+		$message = [];
         $user = $this->Users->newEntity();
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->data);
             if ($this->Users->save($user)) {
-                $this->Flash->success(__('The user has been saved.'));
-				
-//                return $this->redirect(['action' => 'index']);
+				$message = [
+					"type" => "success",
+					"body" => "The user has been saved."
+				];
             } else {
-                $this->Flash->error(__('The user could not be saved. Please, try again.'));
+				$message = [
+					"type" => "success",
+					"body" => "The user could not be saved. Please, try again."
+				];
             }
         }
         $this->set(compact('user'));
