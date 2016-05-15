@@ -77,7 +77,7 @@ class LoginController extends AppController
 		} catch (UnauthorizedException $e) {            
 			throw new UnauthorizedException($e->getMessage(),401);   
 		}           
-		$this->set('user', $this->Auth->user());        
+		$this->set('user', $this->request->session()->read());        
 		$this->set('_serialize', ['user']);
 	}
 	/**

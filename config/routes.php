@@ -87,7 +87,6 @@ Router::scope('/', function (RouteBuilder $routes) {
 	$routes->connect(  '/forbiden', ['controller' => 'Pages', 'action'=>'forbiden']); 
 	$routes->connect(  '/unauthorized', ['controller' => 'Pages', 'action'=>'unauthorized']);
 	
-//	$routes->connect('/login', ['controller' => 'Users', 'action' => 'login', "_ext" => "json"]);
 	
     /**
      * Connect catchall routes for all controllers.
