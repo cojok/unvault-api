@@ -84,6 +84,9 @@ Router::scope('/', function (RouteBuilder $routes) {
 	//logged in user data
 	$routes->connect('/user', ['controller' => 'Users', 'action' => 'index']);
 	
+	//get tags
+	$routes->connect('tags', ['controller' => 'Tags', 'action' => 'index']);
+	
 	$routes->connect(  '/forbiden', ['controller' => 'Pages', 'action'=>'forbiden']); 
 	$routes->connect(  '/unauthorized', ['controller' => 'Pages', 'action'=>'unauthorized']);
 	
