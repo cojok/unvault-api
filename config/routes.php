@@ -79,7 +79,10 @@ Router::scope('/', function (RouteBuilder $routes) {
 	$routes->connect('/user-add-card', ['controller' => 'UsersCards', 'action' => 'add']);
 	
 	//user cards
-	$routes->connect('/:id/user-cards', ['controller' => 'UsersCards', 'action' => 'view']);
+	$routes->connect('/:id/card', ['controller' => 'Cards', 'action' => 'view']);
+	
+	//
+	
 	//logged in user data
 	$routes->connect('/user', ['controller' => 'Users', 'action' => 'index']);
 	

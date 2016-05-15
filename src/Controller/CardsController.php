@@ -33,6 +33,7 @@ class CardsController extends AppController
      */
     public function view($id = null)
     {
+		$id = $this->request->params['id'];
         $card = $this->Cards->get($id, [
             'contain' => []
         ]);
