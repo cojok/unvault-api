@@ -71,6 +71,15 @@ Router::scope('/', function (RouteBuilder $routes) {
 	
 	//delete card
 	$routes->connect('/:id/delete-card', ['controller' => 'Cards', 'action' => 'delete']);
+	
+	//get all cards
+	$routes->connect('/cards', ['controller' => 'Cards', 'action' => 'index']);
+	
+	//user add card 
+	$routes->connect('/user-add-card', ['controller' => 'UsersCards', 'action' => 'add']);
+	
+	//user cards
+	$routes->connect('/:id/user-cards', ['controller' => 'UsersCards', 'action' => 'view']);
 	//logged in user data
 	$routes->connect('/user', ['controller' => 'Users', 'action' => 'index']);
 	

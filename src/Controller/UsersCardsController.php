@@ -33,10 +33,12 @@ class UsersCardsController extends AppController
      */
     public function view($id = null)
     {
+		$id = $this->request->params['id'];
         $usersCard = $this->UsersCards->get($id, [
             'contain' => []
         ]);
 
+		print_r($usersCard);
         $this->set('usersCard', $usersCard);
         $this->set('_serialize', ['usersCard']);
     }
@@ -58,8 +60,10 @@ class UsersCardsController extends AppController
                 $this->Flash->error(__('The users card could not be saved. Please, try again.'));
             }
         }
-        $this->set(compact('usersCard'));
-        $this->set('_serialize', ['usersCard']);
+		$users = $this->UsersCards->Users->find('list', ['limit' => '200']);
+		$cards = $this->UsersCards->Cards->find('list', ['limit' => '200']);
+		$this->set(compact('usersCard', 'users', 'cards'));
+		$this->set('_serialize', ['usersCard', 'users', 'cards']);
     }
 
     /**
