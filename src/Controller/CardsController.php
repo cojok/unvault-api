@@ -18,7 +18,13 @@ class CardsController extends AppController
      */
     public function index()
     {
-        $cards = $this->paginate($this->Cards);
+//        $cards = $this->paginate($this->Cards);
+		
+		$cards = $this->Cards->find('all',[
+			'contain' => [
+				'Tags'
+			]
+		]);
 
         $this->set(compact('cards'));
         $this->set('_serialize', ['cards']);
@@ -35,7 +41,9 @@ class CardsController extends AppController
     {
 		$id = $this->request->params['id'];
         $card = $this->Cards->get($id, [
-            'contain' => []
+            'contain' => [
+				'Tags'
+			]
         ]);
 
         $this->set('card', $card);

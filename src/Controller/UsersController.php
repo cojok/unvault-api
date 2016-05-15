@@ -105,7 +105,9 @@ class UsersController extends AppController
 		$id = 1;
         $user = $this->Users->get($id, [
             'contain' => [
-				'Cards'
+				'Cards' => [
+					'Tags'
+				]
 			]
         ]);
 
