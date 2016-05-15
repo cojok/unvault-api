@@ -108,9 +108,9 @@ Router::scope('/', function (RouteBuilder $routes) {
 });
 
 // LOGIN Routes
-Router::scope('/',  ['controller' => 'Login'], function($routes) {    
-	$routes->connect(  '/login', ['action'=>'index',  '_ext'=>'json','[method]'=>'POST']); 
-	$routes->connect(  '/logout', ['action'=>'logout', '_ext'=>'json','[method]'=>'GET']);         
+Router::scope('/login',  ['controller' => 'Login'], function($routes) {    
+	$routes->connect(  '/', ['action'=>'index',  '_ext'=>'json','[method]'=>'POST']); 
+	$routes->connect(  '/', ['action'=>'logout', '_ext'=>'json','[method]'=>'DELETE']);         
 });  
 
 
