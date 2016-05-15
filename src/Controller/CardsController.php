@@ -89,10 +89,18 @@ class CardsController extends AppController
 		$id = $this->request->params['id'];
 		$message = [];
         $card = $this->Cards->get($id, [
-            'contain' => []
+            'contain' => [
+				'Tags'
+			]
         ]);
+		
+		echo "<pre>";
+		print_r($this->request);
+		
         if ($this->request->is(['patch', 'post', 'put'])) {
             $card = $this->Cards->patchEntity($card, $this->request->data);
+			print_r($card);
+
             if ($this->Cards->save($card)) {
 				$message = [
 					"type" => "success",
@@ -105,8 +113,10 @@ class CardsController extends AppController
 				];
             }
         }
-        $this->set(compact('card', 'message'));
-        $this->set('_serialize', ['card', 'message']);
+		
+		$tags = $this->Cards->Tags->find('list',['limit' => 200]);
+        $this->set(compact('card', 'message', 'tags'));
+        $this->set('_serialize', ['card', 'message','tags']);
     }
 
     /**
