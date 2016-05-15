@@ -94,13 +94,8 @@ class CardsController extends AppController
 			]
         ]);
 		
-		echo "<pre>";
-		print_r($this->request);
-		
         if ($this->request->is(['patch', 'post', 'put'])) {
             $card = $this->Cards->patchEntity($card, $this->request->data);
-			print_r($card);
-
             if ($this->Cards->save($card)) {
 				$message = [
 					"type" => "success",
