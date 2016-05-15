@@ -26,7 +26,7 @@ class UsersController extends AppController
 		// cause problems with normal functioning of AuthComponent.
 //		$this->Auth->config('message', "Woopsie, you are not authorized to access this area.");
 		
-		$this->Auth->allow(['add']);
+//		$this->Auth->allow(['add']);
 	}
 	
 //	/**
@@ -83,8 +83,7 @@ class UsersController extends AppController
      */
     public function index($id = null)
     {
-//        $users = $this->paginate($this->Users);
-		
+//		$users = $this->paginate($this->Users);
 		$id = 1;
 		$user = $this->Users->get($id, [
 			'contain' => []
