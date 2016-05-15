@@ -100,13 +100,26 @@ class UsersCardsController extends AppController
      */
     public function delete($id = null)
     {
+		$message = [];
         $this->request->allowMethod(['post', 'delete']);
+		
+		$id = $this->request->params['id'];
+		
         $usersCard = $this->UsersCards->get($id);
+		
         if ($this->UsersCards->delete($usersCard)) {
-            $this->Flash->success(__('The users card has been deleted.'));
+			$message = [
+				'type' => 'success',
+				'body' => 'The users card has been deleted.'
+			];
         } else {
-            $this->Flash->error(__('The users card could not be deleted. Please, try again.'));
+			$message = [
+				"type" => "success",
+				"body" => "The users card could not be deleted. Please, try again."
+			];
         }
-        return $this->redirect(['action' => 'index']);
+		$this->set(compact('message'));
+		$this->set('_serialize', ['message']);
+//        return $this->redirect(['action' => 'index']);
     }
 }

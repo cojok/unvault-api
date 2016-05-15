@@ -78,6 +78,9 @@ Router::scope('/', function (RouteBuilder $routes) {
 	//user add card 
 	$routes->connect('/user-add-card', ['controller' => 'UsersCards', 'action' => 'add']);
 	
+	//remove user card
+	$routes->connect('/:id/delete-user-card', ['controller' => 'UsersCards', 'action' => 'delete']);
+	
 	//user cards
 	$routes->connect('/:id/card', ['controller' => 'Cards', 'action' => 'view']);
 	
