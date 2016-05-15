@@ -57,18 +57,24 @@ class CardsController extends AppController
      */
     public function add()
     {
+		$message= [];
         $card = $this->Cards->newEntity();
         if ($this->request->is('post')) {
             $card = $this->Cards->patchEntity($card, $this->request->data);
             if ($this->Cards->save($card)) {
-                $this->Flash->success(__('The card has been saved.'));
-                return $this->redirect(['action' => 'index']);
+				$message = [
+					"type" => "success",
+					"body" => "The card was successfully added."
+				];
             } else {
-                $this->Flash->error(__('The card could not be saved. Please, try again.'));
+				$message = [
+					"type" => "error",
+					"body" => "There was a problem adding your card."
+				];
             }
         }
-        $this->set(compact('card'));
-        $this->set('_serialize', ['card']);
+        $this->set(compact('card', 'message'));
+        $this->set('_serialize', ['card', 'message']);
     }
 
     /**
@@ -81,20 +87,26 @@ class CardsController extends AppController
     public function edit($id = null)
     {
 		$id = $this->request->params['id'];
+		$message = [];
         $card = $this->Cards->get($id, [
             'contain' => []
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $card = $this->Cards->patchEntity($card, $this->request->data);
             if ($this->Cards->save($card)) {
-                $this->Flash->success(__('The card has been saved.'));
-                return $this->redirect(['action' => 'index']);
+				$message = [
+					"type" => "success",
+					"body" => "The card has been saved."
+				];
             } else {
-                $this->Flash->error(__('The card could not be saved. Please, try again.'));
+				$message = [
+					"type" => "success",
+					"body" => "The card could not be saved. Please, try again."
+				];
             }
         }
-        $this->set(compact('card'));
-        $this->set('_serialize', ['card']);
+        $this->set(compact('card', 'message'));
+        $this->set('_serialize', ['card', 'message']);
     }
 
     /**
@@ -110,10 +122,17 @@ class CardsController extends AppController
 		$id = $this->request->params['id'];
         $card = $this->Cards->get($id);
         if ($this->Cards->delete($card)) {
-            $this->Flash->success(__('The card has been deleted.'));
+			$message = [
+				"type" => "success",
+				"body" => "The card has been deleted."
+			];
         } else {
-            $this->Flash->error(__('The card could not be deleted. Please, try again.'));
+			$message = [
+				"type" => "success",
+				"body" => "The card could not be deleted. Please, try again."
+			];
         }
-        return $this->redirect(['action' => 'index']);
+		$this->set(compact('message'));
+		$this->set('_serialize', ['message']);
     }
 }
