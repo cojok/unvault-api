@@ -107,11 +107,11 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->fallbacks('DashedRoute');
 });
 
-// LOGIN Routes
-Router::scope('/login',  ['controller' => 'Login'], function($routes) {    
-	$routes->connect(  '/', ['action'=>'index',  '_ext'=>'json','[method]'=>'POST']); 
-	$routes->connect(  '/', ['action'=>'logout', '_ext'=>'json','[method]'=>'DELETE']);         
-});  
+//// LOGIN Routes
+//Router::scope('/login',  ['controller' => 'Login'], function($routes) {    
+//	$routes->connect(  '/', ['action'=>'index',  '_ext'=>'json','[method]'=>'POST']); 
+//	$routes->connect(  '/', ['action'=>'logout', '_ext'=>'json','[method]'=>'DELETE']);         
+//});  
 
 
 
