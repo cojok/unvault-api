@@ -105,7 +105,7 @@ class AppController extends Controller
      */
 	private function getHeaders() 
 	{
-		$headers = getallheaders();        
+		$headers = apache_request_headers();        
 		return $headers;
 	}
 
