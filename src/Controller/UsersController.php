@@ -133,7 +133,7 @@ class UsersController extends AppController
 				];
             } else {
 				$message = [
-					"type" => "success",
+					"type" => "error",
 					"body" => "The user could not be saved. Please, try again."
 				];
             }
@@ -163,20 +163,19 @@ class UsersController extends AppController
             if ($this->Users->save($user)) {
 				$message = [
 					"type" => "success",
-					"body" => "The card could not be deleted. Please, try again."
+					"body" => "The user has been saved."
 				];
-                $this->Flash->success(__('The user has been saved.'));
+                $this->Flash->success(__(''));
                 return $this->redirect(['action' => 'index']);
             } else {
 				$message = [
-					"type" => "success",
-					"body" => "The card could not be deleted. Please, try again."
+					"type" => "error",
+					"body" => "The user could not be saved. Please, try again."
 				];
-                $this->Flash->error(__('The user could not be saved. Please, try again.'));
             }
         }
-        $this->set(compact('user'));
-        $this->set('_serialize', ['user']);
+        $this->set(compact('user', 'message'));
+        $this->set('_serialize', ['user', 'message']);
     }
 
     /**
@@ -190,12 +189,21 @@ class UsersController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $user = $this->Users->get($id);
+		$message = [];
         if ($this->Users->delete($user)) {
-            $this->Flash->success(__('The user has been deleted.'));
+			$message = [
+				"type" => "success",
+				"body" => "The user has been deleted."
+			];
         } else {
-            $this->Flash->error(__('The user could not be deleted. Please, try again.'));
+			$message = [
+				"type" => "error",
+				"body" => "The user could not be deleted. Please, try again."
+			];
         }
         return $this->redirect(['action' => 'index']);
+		$this->set(compact('message'));
+		$this->set('_serialize', ['message']);
     }
 	
 }

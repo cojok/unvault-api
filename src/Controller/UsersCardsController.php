@@ -51,19 +51,25 @@ class UsersCardsController extends AppController
     public function add()
     {
         $usersCard = $this->UsersCards->newEntity();
+		$message = [];
         if ($this->request->is('post')) {
             $usersCard = $this->UsersCards->patchEntity($usersCard, $this->request->data);
             if ($this->UsersCards->save($usersCard)) {
-                $this->Flash->success(__('The users card has been saved.'));
-                return $this->redirect(['action' => 'index']);
+				$message = [
+					"type" => "success",
+					"body" => "The users card has been saved."
+				];
             } else {
-                $this->Flash->error(__('The users card could not be saved. Please, try again.'));
+				$message = [
+					"type" => "error",
+					"body" => "The users card could not be saved. Please, try again."
+				];
             }
         }
 		$users = $this->UsersCards->Users->find('list', ['limit' => '200']);
 		$cards = $this->UsersCards->Cards->find('list', ['limit' => '200']);
-		$this->set(compact('usersCard', 'users', 'cards'));
-		$this->set('_serialize', ['usersCard', 'users', 'cards']);
+		$this->set(compact('usersCard', 'users', 'cards','message'));
+		$this->set('_serialize', ['usersCard', 'users', 'cards', 'message']);
     }
 
     /**
@@ -114,12 +120,12 @@ class UsersCardsController extends AppController
 			];
         } else {
 			$message = [
-				"type" => "success",
+				"type" => "error",
 				"body" => "The users card could not be deleted. Please, try again."
 			];
         }
 		$this->set(compact('message'));
 		$this->set('_serialize', ['message']);
-//        return $this->redirect(['action' => 'index']);
+
     }
 }
