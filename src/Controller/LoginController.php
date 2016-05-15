@@ -70,7 +70,6 @@ class LoginController extends AppController
 			// return Auth token
 			$this->response->header('Authorization', 'Bearer ' . $token);
 			
-//			print_r($this->request->session()->read());
 
 
 
