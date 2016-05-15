@@ -100,7 +100,7 @@ class CardsController extends AppController
 				];
             } else {
 				$message = [
-					"type" => "success",
+					"type" => "error",
 					"body" => "The card could not be saved. Please, try again."
 				];
             }
@@ -128,7 +128,7 @@ class CardsController extends AppController
 			];
         } else {
 			$message = [
-				"type" => "success",
+				"type" => "error",
 				"body" => "The card could not be deleted. Please, try again."
 			];
         }

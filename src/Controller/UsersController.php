@@ -138,8 +138,8 @@ class UsersController extends AppController
 				];
             }
         }
-        $this->set(compact('user'));
-        $this->set('_serialize', ['user']);
+        $this->set(compact('user', 'message'));
+        $this->set('_serialize', ['user', 'message']);
     }
 
     /**
@@ -151,6 +151,7 @@ class UsersController extends AppController
      */
     public function edit($id = null)
     {
+		$message = [];
         $user = $this->Users->get($id, [
             'contain' => [
 				'Cards'
@@ -160,9 +161,17 @@ class UsersController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $user = $this->Users->patchEntity($user, $this->request->data);
             if ($this->Users->save($user)) {
+				$message = [
+					"type" => "success",
+					"body" => "The card could not be deleted. Please, try again."
+				];
                 $this->Flash->success(__('The user has been saved.'));
                 return $this->redirect(['action' => 'index']);
             } else {
+				$message = [
+					"type" => "success",
+					"body" => "The card could not be deleted. Please, try again."
+				];
                 $this->Flash->error(__('The user could not be saved. Please, try again.'));
             }
         }
